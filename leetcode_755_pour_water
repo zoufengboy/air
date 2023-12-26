@@ -1,0 +1,50 @@
+class Solution {
+public:
+    vector<int> pourWater(vector<int>& heights, int volume, int k) {
+        for (int i = 0; i< volume; i++) {
+            bool fall =0;
+            //check left
+            stack<int> leftStk;
+            leftStk.push(k);
+            for (int left=k-1; left>=0; left--) {
+                if(heights[leftStk.top()]>heights[left]){
+                    leftStk.pop();
+                    leftStk.push(left);
+                } else if (heights[leftStk.top()] < heights[left]) {
+                    break;
+                }
+            }
+            if (!leftStk.empty() && leftStk.top()!= k) {
+                heights[leftStk.top()]++;
+                fall=1;
+            }
+            
+            
+            // check right
+            stack<int> rightStk;
+            
+            if (fall == 0) {
+                rightStk.push(k);
+                for (int right = k+1; right<heights.size(); right++) {
+                    if (heights[rightStk.top()]> heights[right]) {
+                        rightStk.pop();
+                        rightStk.push(right);
+                    } else if (heights[rightStk.top()] < heights[right]) {
+                        break;
+                    }
+                }
+                
+                if (!rightStk.empty() && rightStk.top()!= k) {
+                    heights[rightStk.top()]++;
+                    fall=1;
+                }
+            }
+
+            if (fall ==0) {
+                heights[k]++;
+            }
+
+        }
+        return heights;
+    }
+};
