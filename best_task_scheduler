@@ -41,7 +41,7 @@ class compareReward {
 };
 
 
-vector<string> scheduleTask(vector<Task>& tasks) {
+vector<Task> scheduleTask(vector<Task>& tasks) {
     priority_queue<Task, vector<Task>, compareReward> pq;
     sort(tasks.begin(), tasks.end(), cmp);
 
@@ -60,11 +60,12 @@ vector<string> scheduleTask(vector<Task>& tasks) {
            }
         }
     }
-    vector<string> res;
+    vector<Task> res;
     while(!pq.empty()) {
-       res.push_back(pq.top().name);
+       res.push_back(pq.top());
        pq.pop();
     }
+    sort(res.begin(), res.end(), cmp);
     return res;
 }
 
@@ -72,26 +73,26 @@ vector<string> scheduleTask(vector<Task>& tasks) {
 
 int main()
 {
-    cout<<"Hello World";
+    cout<<"Hello World: ";
 
     vector<Task> tasks;
     string str1 = "A";
     string str2 = "B";
     string str3 = "C";
     string str4 = "D";
-    Task task1 (str1, 3, 5);
-    Task task2 (str2, 0, 2);
-    Task task3 (str3, 4, 1);
-    Task task4 (str4, 0, 1);
+    Task task1 (str1, 0, 5);
+    Task task2 (str2, 3, 2);
+    Task task3 (str3, 3, 1);
+    Task task4 (str4, 4, 1);
     tasks.push_back(task1);
     tasks.push_back(task2);
     tasks.push_back(task3);
     tasks.push_back(task4);
     
-    vector<string> res = scheduleTask(tasks);
+    vector<Task> res = scheduleTask(tasks);
 
-    for (auto name :res) {
-        cout << name << " ";
+    for (auto task :res) {
+        cout << task.name << " ";
     }
     cout << "\n";
     return 0;
